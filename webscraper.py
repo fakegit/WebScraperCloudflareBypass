@@ -13,15 +13,12 @@ from msvcrt import getch
 from collections import deque
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-from colorama import init
-from colorama import Fore, Back, Style
 from nt import access
 init() 
 from threading import *
 screen_lock = Semaphore(value=1)
 import json
 import os
-
 
 
 Tk().withdraw() #remove the window
@@ -280,20 +277,18 @@ while True:
                     print(Fore.WHITE +"Proxies were updated with fresh ones!!")
  
     except KeyboardInterrupt:
-        print(Fore.WHITE +'Exiting and saving the remaining data...')
+        print('Exiting and saving the remaining data...')
         killall=1
         while True:
             running = 0
             for p in processes: 
                 if  p.isAlive():
                     running = 1 
-
                 else:
                     processes.remove(p) 
-
                 if not running: 
                     end = 1
-                    
+                   
                     screen_lock.acquire()    
                     if ( len(source_lst)>=1):
                         with open('remaining_source.txt','w+', encoding="utf8") as file: 
@@ -302,4 +297,4 @@ while True:
                                 screen_lock.release()  
                     break
 
-print(Fore.WHITE +'\n\nDone.')
+print('\n\nDone.')
