@@ -40,10 +40,8 @@ headers = {
             'origin' : 'http://example.com/'         
           }   
 
-
 #global variable that check if using proxies or not
 use_prox=0
-
 
 #list keys
 keys = {'timed out' : ('Request limiting policy has been breached','An error has occurred.'),
@@ -51,7 +49,6 @@ keys = {'timed out' : ('Request limiting policy has been breached','An error has
         'success':('http://example.com/'),
         'unsuccess':('403','<title>Access denied','<title>Could not find host ','<title>Attention Required!')
         }
-
 
 #the source file is a file with the following format: "data1:data2\n"
 print('Select Source file')
@@ -64,12 +61,11 @@ with open(source_file,'r', encoding="utf8") as source:
 choose=0
 proxy_type =['https://','socks4://','socks5://']
 
-
 #proxy scrape is a free proxy pool
 print("Do you want use auto downloaded proxies from proxyscrape or to use yours?")
 use_auto_proxies = int(input('To auto download digit [0] or to use yours [1]: '))
 if(use_auto_proxies==0):
-    type=int(input('HTTP [0], HTTPS [1], ELITE[2]: '))
+    type=int(input('http [0], https [1], other[2]: '))
     
 if type==0:
     urlproxies="https://proxyscrape.com/proxies/HTTP_Working_Proxies.txt"
@@ -88,14 +84,14 @@ if use_auto_proxies==1:
 
 if use_auto_proxies==0:    
     r = requests.get(urlproxies)
-    with open("temp.tmp", 'wb') as f:  
+    with open("tempf.tmp", 'wb') as f:  
         f.write(r.content)     
-    with open("temp.tmp",'r') as proxyfile:
+    with open("tempf.tmp",'r') as proxyfile:
         for line in proxyfile.readlines():
             proxies.append(line.rstrip()) 
-    if os.path.exists("temp.tmp"):    
-        os.remove("temp.tmp")  
-    print("proxy were uploaded")    
+    if os.path.exists("tempf.tmp"):    
+        os.remove("tempf.tmp")  
+    print("proxy were updated!")    
         
          
 
@@ -104,7 +100,6 @@ if use_auto_proxies==0:
 ####################################
 ######   CPM UPDATE             ####
 ####################################
-
 def cpm():
     global old_len,cpm,end
 
@@ -119,7 +114,6 @@ def cpm():
 ####################################
 ######   UPDATE THE STATUS BAR   ###
 ####################################
-
 def update():
     global cpm,end, source_lst,proxies,hits
     while not end:
@@ -136,7 +130,6 @@ def update():
 ####################################
 ######  REQUEST    #################
 ####################################
-
 def get_resp(): 
         global source_lst,proxies,url,proxy_type,proxy_type_in,hits,first,i,killall
 
@@ -221,8 +214,6 @@ def get_resp():
 ####################################
 ###########     MAIN     ###########
 ####################################
-
-
 threads=5
 threads = input('How many threads ( Default is 5) ?: ')
 
@@ -265,16 +256,16 @@ while True:
     
             else:    
                 r = requests.get(urlproxies)
-                with open("temp.tmp", 'wb') as f:  
+                with open("tempf.tmp", 'wb') as f:  
                     f.write(r.content)     
                 screen_lock.acquire()
-                with open("temp.tmp",'r') as proxyfile:
+                with open("tempf.tmp",'r') as proxyfile:
                     for line in proxyfile.readlines():
                         proxies.append(line.rstrip()) 
                 screen_lock.release() 
-                if os.path.exists("temp.tmp"):    
-                    os.remove("temp.tmp")
-                    print(Fore.WHITE +"Proxies were updated with fresh ones!!")
+                if os.path.exists("tempf.tmp"):    
+                    os.remove("tempf.tmp")
+                    print("Proxies were updated!")
  
     except KeyboardInterrupt:
         print('Exiting and saving the remaining data...')
@@ -296,5 +287,3 @@ while True:
                                 file.write(source[0]+':'+ source[1] + '\n')
                                 screen_lock.release()  
                     break
-
-print('\n\nDone.')
