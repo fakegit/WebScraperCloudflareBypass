@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-#Web scraper able to bypass Cloudflare using a pool of proxies
+#
+#Web scraper written in python able to bypass Cloudflare using a pool of proxies
 #don't use it to do harmfull/illegal things, the coder is not responsable for them,this code is only for educational purporse
 
 import sys
